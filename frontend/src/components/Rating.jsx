@@ -10,7 +10,7 @@ const Rating = ({value,text}) => {
         <span>{ value >=4 ?<FaStar/> : value>=3.5?<FaStarHalfAlt/>: <FaRegStar/>}</span>
         <span>{ value >=5 ?<FaStar/> : value>=4.5?<FaStarHalfAlt/>: <FaRegStar/>}</span>
 
-        <spna className="rating-text">{text&&text}</spna>
+        <span className="rating-text">{text&&text}</span>
 
     </div>
   )

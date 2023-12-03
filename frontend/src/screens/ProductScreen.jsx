@@ -1,29 +1,28 @@
-import React from 'react'
 import { useParams } from 'react-router-dom';
 // import products from '../products';
-import { useEffect,useState } from 'react'
-import axios from 'axios'
 import { Link } from 'react-router-dom';
 import { Card,Row,Col,Image,ListGroup,Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
+import {useGetProductDetailsQuery} from '../slices/productsApiSlice.js'
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+
 
 const ProductScreen = () => {
  
-    const [product,setproduct]=useState({}); 
     const {id:productId}= useParams();
 
-  useEffect( ()=>{
-
-      const fetchProducts = async() => {
-        const{data} =await axios.get(`/api/products/${productId}`);
-        setproduct(data);
-      }
-
-      fetchProducts();
-  
-  },[productId]);
+    const { data: product ,isLoading , isError} = useGetProductDetailsQuery(productId);
     
   return (
+    <>
+    {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <Message variant='danger'>
+          {isError?.data?.message || isError.error}
+        </Message>
+      ) : (
     <>
     <Link className='btn btn-light my-3' to="/">Go Back</Link>
     <Row>
@@ -85,7 +84,9 @@ const ProductScreen = () => {
         </Col>
     </Row>
     </>
+    )}
+    
+    </>
   )
 }
-
 export default ProductScreen
