@@ -51,7 +51,7 @@ const orderSchema = new mongoose.Schema({
         required:true,
         default:0.0,
     },
-    toatlPrice:{
+    totalPrice:{
         type:Number,
         required:true,
         default:0.0,
