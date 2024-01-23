@@ -2,13 +2,14 @@ import React from 'react'
 import {Navbar,Nav,Container,Badge ,NavDropdown} from 'react-bootstrap';
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 import {FaShoppingCart,FaUser} from 'react-icons/fa';
-import logo from '../assets/logo.png';
+import logo from '../assets/styles/logo.png';
 import {LinkContainer} from 'react-router-bootstrap';
 import { useSelector,useDispatch } from 'react-redux';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
+import SearchBox from './SearchBox';
 import { useNavigate } from 'react-router-dom';
-
+import { clearCartItems } from '../slices/cartSlice';
 
 
 const Header = () => {
@@ -24,6 +25,7 @@ const Header = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
+      dispatch(clearCartItems());
       // NOTE: here we need to reset cart state for when a user logs out so the next
       // user doesn't inherit the previous users cart and shipping
       navigate('/login');
@@ -34,7 +36,7 @@ const Header = () => {
 
   return (
     <header>
-        <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+        <Navbar bg="primary" variant="dark" expand="md" collapseOnSelect>
             <Container>
               <LinkContainer to='/'>
               <Navbar.Brand>
@@ -45,6 +47,7 @@ const Header = () => {
               <Navbar.Toggle aria-controls='basic-navbar-nav'/>
               <NavbarCollapse id='baisc-navbar-nav'>
                 <Nav className='ms-auto'>
+                  <SearchBox/>
                   <LinkContainer to='/cart'>
                   <Nav.Link><FaShoppingCart/>Cart
                   {cartItems.length > 0 && (

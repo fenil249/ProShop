@@ -10,7 +10,8 @@ import Loader from '../components/Loader';
 import { useProfileMutation } from '../slices/usersApiSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import { setCredentials } from '../slices/authSlice';
- 
+import Meta from '../components/Meta';
+
 const ProfileScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -50,6 +51,8 @@ const ProfileScreen = () => {
   };
 
   return (
+    <>
+    <Meta title='Profile'/>
     <Row>
       <Col md={3}>
         <h2>User Profile</h2>
@@ -155,6 +158,7 @@ const ProfileScreen = () => {
         )}
       </Col>
     </Row>
+    </>
   );
 };
 

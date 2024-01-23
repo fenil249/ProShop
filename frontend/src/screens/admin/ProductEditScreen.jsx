@@ -10,7 +10,7 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
-
+import Meta from '../../components/Meta';
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
 
@@ -84,6 +84,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
+    <Meta title='Update Product'/>
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         Go Back
       </Link>

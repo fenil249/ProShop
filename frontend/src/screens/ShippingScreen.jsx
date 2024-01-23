@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import FormContainer from '../components/FormContainer';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { saveShippingAddress } from '../slices/cartSlice';
-
+import Meta from '../components/Meta';
 const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
@@ -27,6 +27,8 @@ const ShippingScreen = () => {
   };
 
   return (
+    <>
+    <Meta title='Shipping Details'/>
     <FormContainer>
       <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
@@ -80,6 +82,7 @@ const ShippingScreen = () => {
         </Button>
       </Form>
     </FormContainer>
+    </>
   );
 };
 

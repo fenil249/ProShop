@@ -1,34 +1,42 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
+import Paginate from '../../components/Paginate';
 import {
   useGetProductsQuery,
-  useCreateProductMutation,
   useDeleteProductMutation,
+  useCreateProductMutation,
 } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
+import Meta from '../../components/Meta';
+
 
 const ProductListScreen = () => {
+  const { pageNumber } = useParams();
 
-  const { data, isLoading, error, refetch } = useGetProductsQuery();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
 
   const [deleteProduct, { isLoading: loadingDelete }] =
-  useDeleteProductMutation();
+    useDeleteProductMutation();
 
-const deleteHandler = async (id) => {
-  if (window.confirm('Are you sure')) {
-    try {
-      await deleteProduct(id);
-      refetch();
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+  const deleteHandler = async (id) => {
+    if (window.confirm('Are you sure')) {
+      try {
+        await deleteProduct(id);
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
-  }
-};
+  };
 
-  const [createProduct, { isLoading: loadingCreate }] =useCreateProductMutation();
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm('Are you sure you want to create a new product?')) {
@@ -41,9 +49,9 @@ const deleteHandler = async (id) => {
     }
   };
 
-
   return (
     <>
+    <Meta title='Product List'/>
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>
@@ -75,7 +83,7 @@ const deleteHandler = async (id) => {
               </tr>
             </thead>
             <tbody>
-              {data.map((product) => (
+              {data.products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -100,7 +108,7 @@ const deleteHandler = async (id) => {
               ))}
             </tbody>
           </Table>
-         
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}
     </>

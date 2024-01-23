@@ -8,6 +8,7 @@ import FormContainer from '../components/FormContainer';
 import { useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+import Meta from '../components/Meta';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
@@ -49,6 +50,8 @@ const RegisterScreen = () => {
   };
 
   return (
+    <>
+    <Meta title='Profile'/>
     <FormContainer>
       <h1>Register</h1>
       <Form onSubmit={submitHandler}>
@@ -107,6 +110,7 @@ const RegisterScreen = () => {
         </Col>
       </Row>
     </FormContainer>
+    </>
   );
 };
 
